@@ -1,0 +1,4 @@
+jtype: UriDownloader
+metas:
+  py_modules:
+    - executor.py
