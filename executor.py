@@ -1,6 +1,8 @@
 from jina import Executor, DocumentArray, requests
+from jina.logging.logger import JinaLogger
 import requests as rq
 
+logger = JinaLogger("UriDownloader")
 
 class UriDownloader(Executor):
     @requests
@@ -13,6 +15,6 @@ class UriDownloader(Executor):
                         if r.status_code == 200:
                             doc.blob = r.content
                         else:
-                            print(f"UriDownloader: Failed to download {doc.uri} - status code {r.status_code}")
+                            logger.warning(f"Failed to download {doc.uri} - status code {r.status_code}")
                     except:
-                        print(f"UriDownloader: Failed to download {doc.uri}")
+                        logger.warning(f"UriDownloader: Failed to download {doc.uri}")
