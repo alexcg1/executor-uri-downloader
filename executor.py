@@ -8,5 +8,11 @@ class UriDownloader(Executor):
         for doc in docs:
             if doc.uri:
                 if doc.uri.startswith("http"):
-                    r = rq.get(doc.uri, allow_redirects=True)
-                    doc.blob = r.content
+                    try:
+                        r = rq.get(doc.uri, allow_redirects=True)
+                        if r.status_code == 200:
+                            doc.blob = r.content
+                        else:
+                            print(f"UriDownloader: Failed to download {doc.uri} - status code {r.status_code}")
+                    except:
+                        print(f"UriDownloader: Failed to download {doc.uri}")
